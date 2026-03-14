@@ -11,18 +11,21 @@ namespace Proiect_PIU
         public string Nume { get; set; }
         public string Prenume { get; set; }
         public int Varsta { get; set; }
-        
-        public Persoana(string nume, string prenume, int varsta)
+        public string Telefon { get; set; }
+        public Persoana(string nume, string prenume, int varsta, string telefon)
         {
             Nume = nume;
             Prenume = prenume;
             Varsta = varsta;
+            Telefon = telefon;
         }
         public virtual void Afisare()
         {
-            Console.WriteLine("Nume: {Nume}");
-            Console.WriteLine("Prenume: {Prenume}");
-            Console.WriteLine("Varsta: {Varsta}");
+            Console.WriteLine("Nume: " + Nume);
+            Console.WriteLine("Prenume: " + Prenume);
+            Console.WriteLine("Varsta: " + Varsta);
+            Console.WriteLine("Telefon: " + Telefon);
+            Console.WriteLine();
         }
     }
 }
