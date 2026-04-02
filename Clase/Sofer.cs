@@ -7,8 +7,7 @@ namespace Clase
     {
         public double KmParcursi { get; set; }
 
-        public Sofer(string nume, string prenume, int varsta, string telefon, double km)
-            : base(nume, prenume, varsta, telefon)
+        public Sofer(string nume, string prenume, int varsta, string telefon, double km): base(nume, prenume, varsta, telefon)
         {
             KmParcursi = km;
         }

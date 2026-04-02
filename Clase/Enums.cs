@@ -19,7 +19,5 @@ namespace Clase
         Niciuna = 0,
         AerConditionat = 1,
         Navigatie = 2,
-        CutieAutomata = 4,
-        IncalzireScaune = 8
     }
 }
