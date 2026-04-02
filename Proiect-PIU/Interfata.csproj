@@ -8,4 +8,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Clase\Clase.csproj" />
+    <ProjectReference Include="..\Date\Date.csproj" />
+  </ItemGroup>
+
 </Project>

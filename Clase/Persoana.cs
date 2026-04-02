@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Proiect_PIU
+namespace Clase
 {
-    class Persoana
+    public class Persoana
     {
         public string Nume { get; set; }
         public string Prenume { get; set; }
         public int Varsta { get; set; }
         public string Telefon { get; set; }
+
         public Persoana(string nume, string prenume, int varsta, string telefon)
         {
             Nume = nume;
@@ -19,13 +16,10 @@ namespace Proiect_PIU
             Varsta = varsta;
             Telefon = telefon;
         }
+
         public virtual void Afisare()
         {
-            Console.WriteLine("Nume: " + Nume);
-            Console.WriteLine("Prenume: " + Prenume);
-            Console.WriteLine("Varsta: " + Varsta);
-            Console.WriteLine("Telefon: " + Telefon);
-            Console.WriteLine();
+            Console.WriteLine($"Nume: {Nume} {Prenume}, Varsta: {Varsta}, Tel: {Telefon}");
         }
     }
 }
