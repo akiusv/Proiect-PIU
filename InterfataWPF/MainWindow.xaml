@@ -73,7 +73,7 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Content="Adaugă" Click="BtnAdaugaSofer_Click"/>
                             <!--Tema 8.3 cautarea-->
-                            <Button Content="Modifică Selectat" Click="BtnModificaSofer_Click" Background="#FF9800"/>
+                            <Button Content="Modifică" Click="BtnModificaSofer_Click" Background="#FF9800"/>
                         </StackPanel>
                     </StackPanel>
 
@@ -114,7 +114,7 @@
                             <RadioButton x:Name="rbGri" Content="Gri" Margin="0,0,10,5"/>
                         </WrapPanel>
                         <Label Content="Opțiuni Extra:" FontWeight="Bold" Margin="0,10,0,0"/>
-                        <CheckBox x:Name="chkAC" Content="Aer Condiționat" Margin="5,2"/>
+                        <CheckBox x:Name="chkAC" Content="Aer condiționat" Margin="5,2"/>
                         <CheckBox x:Name="chkNav" Content="Navigație GPS" Margin="5,2"/>
 
                         <Button Content="Adaugă Vehicul" Click="BtnAdaugaVehicul_Click" Margin="0,15,0,0"/>
@@ -152,6 +152,7 @@
                         <Label Content="Firma:"/>
                         <TextBox x:Name="txtFirmaClient"/>
                         <Button Content="Adaugă Client" Click="BtnAdaugaClient_Click"/>
+                        
                     </StackPanel>
 
                     <DataGrid x:Name="dgClienti" Grid.Column="1">
@@ -174,11 +175,11 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" Margin="10">
-                        <Label Content="Selectează Șofer:"/>
+                        <Label Content="Selectează șofer:"/>
                         <ComboBox x:Name="cmbSoferi" DisplayMemberPath="Nume"/>
-                        <Label Content="Selectează Vehicul:"/>
+                        <Label Content="Selectează vehicul:"/>
                         <ComboBox x:Name="cmbVehicule" DisplayMemberPath="Marca"/>
-                        <Label Content="Selectează Client:"/>
+                        <Label Content="Selectează client:"/>
                         <ComboBox x:Name="cmbClienti" DisplayMemberPath="Nume"/>
 
                         <Label Content="Plecare:"/>
@@ -187,13 +188,13 @@
                         <TextBox x:Name="txtDestinatie"/>
                         <Label Content="Distanța (km):"/>
                         <TextBox x:Name="txtDistantaJob"/>
-                        <Label Content="Data și Ora Start:"/>
+                        <Label Content="Data și ora start:"/>
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <DatePicker x:Name="dpDataStart" Width="120" ToolTip="Alege data de start"/>
                             <Label Content="Ora:" Margin="10,0,5,0"/>
                             <TextBox x:Name="txtOraStart" Width="50" Text="08:00" ToolTip="HH:mm"/>
                         </StackPanel>
-                        <Label Content="Data și Ora Final:"/>
+                        <Label Content="Data și ora final:"/>
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <DatePicker x:Name="dpDataFinal" Width="120" ToolTip="Alege data de finalizare"/>
                             <Label Content="Ora:" Margin="10,0,5,0"/>

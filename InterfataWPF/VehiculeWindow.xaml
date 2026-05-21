@@ -1,7 +1,7 @@
 ﻿<Window x:Class="InterfataWPF.VehiculeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Administrare Vehicule (CRUD Complet - Tema 13)" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Administrare Vehicule" Height="450" Width="800" WindowStartupLocation="CenterScreen">
 
     <Grid Margin="10">
         <Grid.ColumnDefinitions>

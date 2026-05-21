@@ -13,7 +13,6 @@ namespace InterfataWPF
         AdministrareVehicule_FisierText adminVehicule = new AdministrareVehicule_FisierText();
         AdministrareClienti_FisierText adminClienti = new AdministrareClienti_FisierText();
         AdministrareJoburi_FisierText adminJoburi = new AdministrareJoburi_FisierText();
-
         // Tema 7.2 constantele pentru validare
         private const int VARSTA_MINIMA = 18;
         private const int VARSTA_MAXIMA = 70;
@@ -22,6 +21,9 @@ namespace InterfataWPF
         {
             InitializeComponent();
             IncarcaToateDatele();
+            dpDataStart.DisplayDateStart = DateTime.Today;
+            dpDataFinal.DisplayDateStart = DateTime.Today;
+
         }
 
         private void IncarcaToateDatele()
@@ -34,6 +36,7 @@ namespace InterfataWPF
             dgVehicule.ItemsSource = vehicule;
             dgClienti.ItemsSource = clienti;
             dgJoburi.ItemsSource = adminJoburi.GetJoburi(soferi, vehicule, clienti);
+
 
             cmbSoferi.ItemsSource = soferi;
             cmbVehicule.ItemsSource = vehicule;
@@ -187,6 +190,18 @@ namespace InterfataWPF
                 string[] formate = { "dd/MM/yyyy HH:mm", "dd-MM-yyyy HH:mm", "dd.MM.yyyy HH:mm" };
                 DateTime start = DateTime.ParseExact(startComplet, formate, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
                 DateTime final = DateTime.ParseExact(finalComplet, formate, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
+
+                if (start < DateTime.Now)
+                {
+                    MessageBox.Show("Data și ora de start nu pot fi în trecut!", "Eroare Dată", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return; // Opreste executia, nu adauga jobul
+                }
+
+                if (final <= start)
+                {
+                    MessageBox.Show("Data de finalizare trebuie să fie DUPĂ data de start!", "Eroare Dată", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
                 Job j = new Job((Sofer)cmbSoferi.SelectedItem, (Vehicul)cmbVehicule.SelectedItem, (Client)cmbClienti.SelectedItem, start, final, txtPlecare.Text, txtDestinatie.Text, double.Parse(txtDistantaJob.Text));
                 adminJoburi.AdaugaJob(j);
