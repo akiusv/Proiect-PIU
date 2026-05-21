@@ -25,7 +25,6 @@ namespace Clase
             Optiuni = optiuni;
         }
 
-        // Constructor din string (pentru fisier text)
         public Vehicul(string linieFisier)
         {
             var date = linieFisier.Split(';');

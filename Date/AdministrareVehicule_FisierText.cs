@@ -38,5 +38,34 @@ namespace Date
             }
             return vehicule;
         }
+        public void ModificaVehicul(string marcaCautata, Vehicul vehiculNou)
+        {
+            var vehicule = GetVehicule();
+            bool modificat = false;
+
+            for (int i = 0; i < vehicule.Count; i++)
+            {
+                if (vehicule[i].Marca.ToLower() == marcaCautata.ToLower())
+                {
+                    vehicule[i] = vehiculNou;
+                    modificat = true;
+                    break;
+                }
+            }
+
+            if (modificat)
+            {
+                File.WriteAllLines(numeFisier, vehicule.Select(v => v.ConversieLaSir_PentruFisier()));
+            }
+        }
+
+        public void StergeVehicul(string marcaCautata)
+        {
+            var vehicule = GetVehicule();
+
+            vehicule.RemoveAll(v => v.Marca.ToLower() == marcaCautata.ToLower());
+
+            File.WriteAllLines(numeFisier, vehicule.Select(v => v.ConversieLaSir_PentruFisier()));
+        }
     }
 }

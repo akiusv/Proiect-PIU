@@ -1,0 +1,221 @@
+﻿<Window x:Class="InterfataWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Administrare Transporturi WPF" Height="650" Width="1000">
+
+    <!--Tema 8.5 WPF Window.Resources-->
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="AlternatingRowBackground" Value="#F0F0F0"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" Background="#EEE" Padding="3">
+            <MenuItem Header="_Fișier">
+                <MenuItem Header="Ieșire" Click="Iesire_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Vehicule (Fereastra Nouă)" Click="DeschideVehicule_Click"/>
+            <MenuItem Header="_Ajutor">
+                <MenuItem Header="Despre aplicație" Click="Despre_Click"/>
+            </MenuItem>
+        </Menu>
+
+        <TabControl Grid.Row="1" Margin="10">
+
+            <TabItem Header="Șoferi">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="2.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="10">
+                        <!-- Tema 8 cautare -->
+                        <GroupBox Header="Căutare">
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <TextBox x:Name="txtCautaSofer" Width="120" ToolTip="Nume șofer..."/>
+                                <Button Content="Caută" Click="BtnCautaSofer_Click" Background="#4CAF50"/>
+                                <Button Content="X" Click="BtnRefreshSoferi_Click" Background="Gray"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <Label x:Name="lblNume" Content="Nume:"/>
+                        <TextBox x:Name="txtNumeSofer"/>
+                        <Label x:Name="lblPrenume" Content="Prenume:"/>
+                        <TextBox x:Name="txtPrenumeSofer"/>
+                        <Label x:Name="lblVarsta" Content="Vârsta:"/>
+                        <TextBox x:Name="txtVarstaSofer"/>
+                        <Label x:Name="lblTelefon" Content="Telefon:"/>
+                        <TextBox x:Name="txtTelefonSofer"/>
+
+                        <Label x:Name="lblEroareSofer" Foreground="Red" FontWeight="Bold" Visibility="Collapsed"/>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Content="Adaugă" Click="BtnAdaugaSofer_Click"/>
+                            <!--Tema 8.3 cautarea-->
+                            <Button Content="Modifică Selectat" Click="BtnModificaSofer_Click" Background="#FF9800"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <DataGrid x:Name="dgSoferi" Grid.Column="1" SelectionChanged="dgSoferi_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Nume" Binding="{Binding Nume}" Width="*"/>
+                            <DataGridTextColumn Header="Prenume" Binding="{Binding Prenume}" Width="*"/>
+                            <DataGridTextColumn Header="Vârsta" Binding="{Binding Varsta}" Width="0.5*"/>
+                            <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Vehicule">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="10">
+                        <Label Content="Marca:"/>
+                        <TextBox x:Name="txtMarca"/>
+                        <Label Content="Model:"/>
+                        <TextBox x:Name="txtModel"/>
+                        <Label Content="An:"/>
+                        <TextBox x:Name="txtAn"/>
+                        <Label Content="Kilometri:"/>
+                        <TextBox x:Name="txtKm"/>
+
+                        <Label Content="Culoare:" FontWeight="Bold" Margin="0,10,0,0"/>
+                        <WrapPanel Margin="5">
+                            <RadioButton x:Name="rbAlb" Content="Alb" IsChecked="True" Margin="0,0,10,5"/>
+                            <RadioButton x:Name="rbNegru" Content="Negru" Margin="0,0,10,5"/>
+                            <RadioButton x:Name="rbRosu" Content="Roșu" Margin="0,0,10,5"/>
+                            <RadioButton x:Name="rbAlbastru" Content="Albastru" Margin="0,0,10,5"/>
+                            <RadioButton x:Name="rbGri" Content="Gri" Margin="0,0,10,5"/>
+                        </WrapPanel>
+                        <Label Content="Opțiuni Extra:" FontWeight="Bold" Margin="0,10,0,0"/>
+                        <CheckBox x:Name="chkAC" Content="Aer Condiționat" Margin="5,2"/>
+                        <CheckBox x:Name="chkNav" Content="Navigație GPS" Margin="5,2"/>
+
+                        <Button Content="Adaugă Vehicul" Click="BtnAdaugaVehicul_Click" Margin="0,15,0,0"/>
+                    </StackPanel>
+
+                    <DataGrid x:Name="dgVehicule" Grid.Column="1">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Marca" Binding="{Binding Marca}" Width="*"/>
+                            <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*"/>
+                            <DataGridTextColumn Header="An" Binding="{Binding An}" Width="0.5*"/>
+                            <DataGridTextColumn Header="Kilometri" Binding="{Binding Kilometri}" Width="0.8*"/>
+                            <DataGridTextColumn Header="Culoare" Binding="{Binding CuloareVehicul}" Width="*"/>
+                            <DataGridTextColumn Header="Opțiuni" Binding="{Binding Optiuni}" Width="1.5*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Clienți">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="10">
+                        <Label Content="Nume:"/>
+                        <TextBox x:Name="txtNumeClient"/>
+                        <Label Content="Prenume:"/>
+                        <TextBox x:Name="txtPrenumeClient"/>
+                        <Label Content="Vârsta:"/>
+                        <TextBox x:Name="txtVarstaClient"/>
+                        <Label Content="Telefon:"/>
+                        <TextBox x:Name="txtTelefonClient"/>
+                        <Label Content="Firma:"/>
+                        <TextBox x:Name="txtFirmaClient"/>
+                        <Button Content="Adaugă Client" Click="BtnAdaugaClient_Click"/>
+                    </StackPanel>
+
+                    <DataGrid x:Name="dgClienti" Grid.Column="1">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Nume" Binding="{Binding Nume}" Width="*"/>
+                            <DataGridTextColumn Header="Prenume" Binding="{Binding Prenume}" Width="*"/>
+                            <DataGridTextColumn Header="Vârsta" Binding="{Binding Varsta}" Width="0.5*"/>
+                            <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}" Width="*"/>
+                            <DataGridTextColumn Header="Firma" Binding="{Binding Firma}" Width="1.5*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Joburi / Rute">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2.5*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="10">
+                        <Label Content="Selectează Șofer:"/>
+                        <ComboBox x:Name="cmbSoferi" DisplayMemberPath="Nume"/>
+                        <Label Content="Selectează Vehicul:"/>
+                        <ComboBox x:Name="cmbVehicule" DisplayMemberPath="Marca"/>
+                        <Label Content="Selectează Client:"/>
+                        <ComboBox x:Name="cmbClienti" DisplayMemberPath="Nume"/>
+
+                        <Label Content="Plecare:"/>
+                        <TextBox x:Name="txtPlecare"/>
+                        <Label Content="Destinație:"/>
+                        <TextBox x:Name="txtDestinatie"/>
+                        <Label Content="Distanța (km):"/>
+                        <TextBox x:Name="txtDistantaJob"/>
+                        <Label Content="Data și Ora Start:"/>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <DatePicker x:Name="dpDataStart" Width="120" ToolTip="Alege data de start"/>
+                            <Label Content="Ora:" Margin="10,0,5,0"/>
+                            <TextBox x:Name="txtOraStart" Width="50" Text="08:00" ToolTip="HH:mm"/>
+                        </StackPanel>
+                        <Label Content="Data și Ora Final:"/>
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <DatePicker x:Name="dpDataFinal" Width="120" ToolTip="Alege data de finalizare"/>
+                            <Label Content="Ora:" Margin="10,0,5,0"/>
+                            <TextBox x:Name="txtOraFinal" Width="50" Text="16:00" ToolTip="HH:mm"/>
+                        </StackPanel>
+                        <Button Content="Alocă Job" Click="BtnAdaugaJob_Click" Background="#4CAF50"/>
+                    </StackPanel>
+
+                    <DataGrid x:Name="dgJoburi" Grid.Column="1">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Șofer" Binding="{Binding SoferAlocat.Nume}" Width="*"/>
+                            <DataGridTextColumn Header="Vehicul" Binding="{Binding VehiculAlocat.Marca}" Width="*"/>
+                            <DataGridTextColumn Header="Client" Binding="{Binding ClientCursa.Nume}" Width="*"/>
+                            <DataGridTextColumn Header="Plecare" Binding="{Binding PunctPlecare}" Width="*"/>
+                            <DataGridTextColumn Header="Destinație" Binding="{Binding PunctDestinatie}" Width="*"/>
+                            <DataGridTextColumn Header="Distanță" Binding="{Binding DistantaTraseu}" Width="0.8*"/>
+                            <DataGridTextColumn Header="Data Start" Binding="{Binding DataIncepere, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Width="1.2*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>

@@ -12,7 +12,6 @@ namespace Clase
             KmParcursi = km;
         }
 
-        // Constructor pentru citirea din fisier text
         public Sofer(string linieFisier) : base("", "", 0, "")
         {
             var dateFisier = linieFisier.Split(';');
