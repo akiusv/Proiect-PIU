@@ -13,13 +13,19 @@ namespace InterfataWPF
         AdministrareVehicule_FisierText adminVehicule = new AdministrareVehicule_FisierText();
         AdministrareClienti_FisierText adminClienti = new AdministrareClienti_FisierText();
         AdministrareJoburi_FisierText adminJoburi = new AdministrareJoburi_FisierText();
+
+
+
         // Tema 7.2 constantele pentru validare
         private const int VARSTA_MINIMA = 18;
         private const int VARSTA_MAXIMA = 70;
 
+        SoferViewModel soferVM = new SoferViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = soferVM;
             IncarcaToateDatele();
             dpDataStart.DisplayDateStart = DateTime.Today;
             dpDataFinal.DisplayDateStart = DateTime.Today;
@@ -48,34 +54,22 @@ namespace InterfataWPF
         private bool ValideazaSofer()
         {
             bool valid = true;
-            lblNume.Foreground = Brushes.Black;
             lblPrenume.Foreground = Brushes.Black;
-            lblVarsta.Foreground = Brushes.Black;
             lblEroareSofer.Visibility = Visibility.Collapsed;
 
-            if (string.IsNullOrWhiteSpace(txtNumeSofer.Text))
-            {
-                lblNume.Foreground = Brushes.Red;
-                valid = false;
-            }
-            if (string.IsNullOrWhiteSpace(txtPrenumeSofer.Text))
-            {
-                lblPrenume.Foreground = Brushes.Red;
-                valid = false;
-            }
-            if (!int.TryParse(txtVarstaSofer.Text, out int varsta) || varsta < VARSTA_MINIMA || varsta > VARSTA_MAXIMA)
-            {
-                lblVarsta.Foreground = Brushes.Red;
-                valid = false;
-            }
+            // Numele si Varsta nu le mai validam manual aici, o face ViewModel-ul prin MVVM!
+            if (!soferVM.EsteValid()) { valid = false; } // Verificam ViewModel-ul
+
+            if (string.IsNullOrWhiteSpace(txtPrenumeSofer.Text)) { lblPrenume.Foreground = Brushes.Red; valid = false; }
+
             if (string.IsNullOrWhiteSpace(txtTelefonSofer.Text) || txtTelefonSofer.Text.Length != 10 || !txtTelefonSofer.Text.All(char.IsDigit))
             { lblTelefon.Foreground = Brushes.Red; valid = false; }
+
             if (!valid)
             {
-                lblEroareSofer.Content = $"Eroare date! Vârsta trebuie să fie {VARSTA_MINIMA}-{VARSTA_MAXIMA}.";
+                lblEroareSofer.Content = "Eroare! Verifică textul cu roșu (Vârsta min 18, Tel 10 cifre).";
                 lblEroareSofer.Visibility = Visibility.Visible;
             }
-
             return valid;
         }
 
@@ -83,12 +77,19 @@ namespace InterfataWPF
         {
             if (ValideazaSofer())
             {
-                Sofer s = new Sofer(txtNumeSofer.Text, txtPrenumeSofer.Text, int.Parse(txtVarstaSofer.Text), txtTelefonSofer.Text, 0);
+                // Observă cum luăm Numele și Vârsta direct din soferVM (ViewModel), nu din TextBox!
+                Sofer s = new Sofer(soferVM.Nume, txtPrenumeSofer.Text, soferVM.Varsta, txtTelefonSofer.Text, 0);
                 adminSoferi.AdaugaSofer(s);
+
+                // Resetam ViewModel-ul pentru urmatorul sofer
+                soferVM.Nume = "";
+                soferVM.Varsta = 18;
+                txtPrenumeSofer.Text = "";
+                txtTelefonSofer.Text = "";
+
                 IncarcaToateDatele();
             }
         }
-
         // Tema 9.2 modificare
         private void BtnModificaSofer_Click(object sender, RoutedEventArgs e)
         {

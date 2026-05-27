@@ -56,11 +56,12 @@
             </DataGrid.Effect>
 
             <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nume" Binding="{Binding Nume}" Width="*"/>
-                    <DataGridTextColumn Header="Prenume" Binding="{Binding Prenume}" Width="*"/>
-                    <DataGridTextColumn Header="Firma" Binding="{Binding Firma}" Width="1.5*"/>
-                    <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                <DataGridTextColumn Header="Nume" Binding="{Binding Nume}" Width="Auto"/>
+                <DataGridTextColumn Header="Prenume" Binding="{Binding Prenume}" Width="Auto"/>
+                <DataGridTextColumn Header="Vârsta" Binding="{Binding Varsta}" Width="60"/>
+                <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}" Width="Auto"/>
+                <DataGridTextColumn Header="Firma" Binding="{Binding Firma}" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
         </Grid>
     </Window>

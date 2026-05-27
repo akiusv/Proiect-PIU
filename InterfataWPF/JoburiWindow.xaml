@@ -69,11 +69,15 @@
                 <DropShadowEffect BlurRadius="8" ShadowDepth="2" Direction="315" Opacity="0.15"/>
             </DataGrid.Effect>
             <DataGrid.Columns>
-                    <DataGridTextColumn Header="Plecare" Binding="{Binding PunctPlecare}" Width="*"/>
-                    <DataGridTextColumn Header="Destinație" Binding="{Binding PunctDestinatie}" Width="*"/>
-                    <DataGridTextColumn Header="Șofer" Binding="{Binding SoferAlocat.Nume}" Width="*"/>
-                    <DataGridTextColumn Header="Data Start" Binding="{Binding DataIncepere, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Width="1.2*"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                <DataGridTextColumn Header="Șofer" Binding="{Binding SoferAlocat.Nume}" Width="Auto"/>
+                <DataGridTextColumn Header="Vehicul" Binding="{Binding VehiculAlocat.Marca}" Width="Auto"/>
+                <DataGridTextColumn Header="Client" Binding="{Binding ClientCursa.Nume}" Width="Auto"/>
+                <DataGridTextColumn Header="Plecare" Binding="{Binding PunctPlecare}" Width="Auto"/>
+                <DataGridTextColumn Header="Destinație" Binding="{Binding PunctDestinatie}" Width="Auto"/>
+                <DataGridTextColumn Header="Distanță" Binding="{Binding DistantaTraseu}" Width="60"/>
+                <DataGridTextColumn Header="Data Start" Binding="{Binding DataIncepere, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Width="120"/>
+                <DataGridTextColumn Header="Data Final" Binding="{Binding DataFinalizare, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
         </Grid>
     </Window>
