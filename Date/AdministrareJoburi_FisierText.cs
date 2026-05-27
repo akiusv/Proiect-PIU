@@ -22,7 +22,25 @@ namespace Date
                 sw.WriteLine(j.ConversieLaSir_PentruFisier());
             }
         }
-
+        public void StergeJob(string punctDestinatie) // Stergem dupa destinatie pentru simplitate
+        {
+            var joburiLinii = File.ReadAllLines(numeFisier).ToList();
+            joburiLinii.RemoveAll(linie => linie.Split(';')[6].ToLower() == punctDestinatie.ToLower()); // index 6 e destinatia
+            File.WriteAllLines(numeFisier, joburiLinii);
+        }
+        public void ModificaJob(string destinatieCautata, Job jobNou)
+        {
+            var joburiLinii = File.ReadAllLines(numeFisier).ToList();
+            for (int i = 0; i < joburiLinii.Count; i++)
+            {
+                if (joburiLinii[i].Split(';')[6].ToLower() == destinatieCautata.ToLower()) // index 6 e destinatia
+                {
+                    joburiLinii[i] = jobNou.ConversieLaSir_PentruFisier();
+                    break;
+                }
+            }
+            File.WriteAllLines(numeFisier, joburiLinii);
+        }
         public List<Job> GetJoburi(List<Sofer> soferi, List<Vehicul> vehicule, List<Client> clienti)
         {
             List<Job> joburi = new List<Job>();

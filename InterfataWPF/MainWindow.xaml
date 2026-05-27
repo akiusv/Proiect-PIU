@@ -1,220 +1,307 @@
 ﻿<Window x:Class="InterfataWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Administrare Transporturi WPF" Height="650" Width="1000">
+        Title="Administrare Transporturi WPF" Height="700" Width="1050" Background="#F4F6F8">
 
-    <!--Tema 8.5 WPF Window.Resources-->
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Padding" Value="15,7"/>
+            <Setter Property="Background" Value="#1976D2"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
         </Style>
+
+        
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="BorderBrush" Value="#CED4DA"/>
         </Style>
+
         <Style TargetType="DataGrid">
             <Setter Property="Margin" Value="10"/>
-            <Setter Property="AlternatingRowBackground" Value="#F0F0F0"/>
+            <Setter Property="AlternatingRowBackground" Value="#E9ECEF"/>
+            <Setter Property="RowBackground" Value="White"/>
+
+            <Setter Property="Background" Value="White"/>
+
+            <Setter Property="HeadersVisibility" Value="Column"/>
+
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="#DEE2E6"/>
+            <Setter Property="BorderBrush" Value="#CED4DA"/>
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="AutoGenerateColumns" Value="False"/>
         </Style>
     </Window.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <!-- Meniu -->
             <RowDefinition Height="*"/>
+            <!-- Continut -->
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0" Background="#EEE" Padding="3">
-            <MenuItem Header="_Fișier">
-                <MenuItem Header="Ieșire" Click="Iesire_Click"/>
+        <!-- MENIU PRINCIPAL -->
+        <Menu Grid.Row="0" Background="#2C3E50" Foreground="White" Padding="5">
+            <Menu.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="3" Direction="270" Opacity="0.3"/>
+            </Menu.Effect>
+
+
+            <MenuItem Header="_Administrare (CRUD)">
+                <MenuItem Header="Modifică Șoferi" Click="DeschideCRUD_Soferi_Click" Foreground="Black"/>
+                <MenuItem Header="Modifică Vehicule" Click="DeschideCRUD_Vehicule_Click" Foreground="Black"/>
+                <MenuItem Header="Modifică Clienți" Click="DeschideCRUD_Clienti_Click" Foreground="Black"/>
+                <MenuItem Header="Modifică Joburi" Click="DeschideCRUD_Joburi_Click" Foreground="Black"/>
             </MenuItem>
-            <MenuItem Header="_Vehicule (Fereastra Nouă)" Click="DeschideVehicule_Click"/>
+
             <MenuItem Header="_Ajutor">
-                <MenuItem Header="Despre aplicație" Click="Despre_Click"/>
+                <MenuItem Header="Despre aplicație" Click="Despre_Click" Foreground="Black"/>
             </MenuItem>
         </Menu>
-
         <TabControl Grid.Row="1" Margin="10">
 
+            <!-- ================= TAB 1: ȘOFERI ================= -->
             <TabItem Header="Șoferi">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="2.5*"/>
-                    </Grid.ColumnDefinitions>
+                <!-- SCROLL ADAUGAT AICI -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="2.5*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Margin="10">
-                        <!-- Tema 8 cautare -->
-                        <GroupBox Header="Căutare">
-                            <StackPanel Orientation="Horizontal" Margin="5">
-                                <TextBox x:Name="txtCautaSofer" Width="120" ToolTip="Nume șofer..."/>
-                                <Button Content="Caută" Click="BtnCautaSofer_Click" Background="#4CAF50"/>
-                                <Button Content="X" Click="BtnRefreshSoferi_Click" Background="Gray"/>
+                        <StackPanel Grid.Column="0" Margin="10">
+                            <GroupBox Header="Căutare (Nume sau Prenume)">
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBox x:Name="txtCautaSofer" Width="150" ToolTip="Introdu nume sau prenume..."/>
+                                    <Button Content="Caută" Click="BtnCautaSofer_Click" Background="#1976D2" Foreground="White"/>
+                                    <Button Content="X" Click="BtnRefresh_Click" Background="#2E7D32" Foreground="White"/>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <Label x:Name="lblNume" Content="Nume:"/>
+                            <TextBox x:Name="txtNumeSofer"/>
+                            <Label x:Name="lblPrenume" Content="Prenume:"/>
+                            <TextBox x:Name="txtPrenumeSofer"/>
+                            <Label x:Name="lblVarsta" Content="Vârsta:"/>
+                            <TextBox x:Name="txtVarstaSofer"/>
+                            <Label x:Name="lblTelefon" Content="Telefon:"/>
+                            <TextBox x:Name="txtTelefonSofer"/>
+
+                            <Label x:Name="lblEroareSofer" Foreground="Red" FontWeight="Bold" Visibility="Collapsed"/>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                                <Button Content="Adaugă Șofer" Click="BtnAdaugaSofer_Click"/>
                             </StackPanel>
-                        </GroupBox>
-
-                        <Label x:Name="lblNume" Content="Nume:"/>
-                        <TextBox x:Name="txtNumeSofer"/>
-                        <Label x:Name="lblPrenume" Content="Prenume:"/>
-                        <TextBox x:Name="txtPrenumeSofer"/>
-                        <Label x:Name="lblVarsta" Content="Vârsta:"/>
-                        <TextBox x:Name="txtVarstaSofer"/>
-                        <Label x:Name="lblTelefon" Content="Telefon:"/>
-                        <TextBox x:Name="txtTelefonSofer"/>
-
-                        <Label x:Name="lblEroareSofer" Foreground="Red" FontWeight="Bold" Visibility="Collapsed"/>
-
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Content="Adaugă" Click="BtnAdaugaSofer_Click"/>
-                            <!--Tema 8.3 cautarea-->
-                            <Button Content="Modifică" Click="BtnModificaSofer_Click" Background="#FF9800"/>
                         </StackPanel>
-                    </StackPanel>
 
-                    <DataGrid x:Name="dgSoferi" Grid.Column="1" SelectionChanged="dgSoferi_SelectionChanged">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Nume" Binding="{Binding Nume}" Width="*"/>
-                            <DataGridTextColumn Header="Prenume" Binding="{Binding Prenume}" Width="*"/>
-                            <DataGridTextColumn Header="Vârsta" Binding="{Binding Varsta}" Width="0.5*"/>
-                            <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}" Width="*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
+                        <DataGrid x:Name="dgSoferi" Grid.Column="1">
+                            <DataGrid.Effect>
+                                <DropShadowEffect BlurRadius="8" ShadowDepth="8" Direction="315" Opacity="0.25"/>
+                            </DataGrid.Effect>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Nume" Binding="{Binding Nume}" Width="Auto"/>
+                                <DataGridTextColumn Header="Prenume" Binding="{Binding Prenume}" Width="Auto"/>
+                                <DataGridTextColumn Header="Vârsta" Binding="{Binding Varsta}" Width="60"/>
+                                <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}" Width="Auto"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
 
+            <!-- ================= TAB 2: VEHICULE ================= -->
             <TabItem Header="Vehicule">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
+                <!-- SCROLL ADAUGAT AICI -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="2.5*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Margin="10">
-                        <Label Content="Marca:"/>
-                        <TextBox x:Name="txtMarca"/>
-                        <Label Content="Model:"/>
-                        <TextBox x:Name="txtModel"/>
-                        <Label Content="An:"/>
-                        <TextBox x:Name="txtAn"/>
-                        <Label Content="Kilometri:"/>
-                        <TextBox x:Name="txtKm"/>
+                        <StackPanel Grid.Column="0" Margin="10">
+                            <GroupBox Header="Căutare (Marcă sau Model)">
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBox x:Name="txtCautaVehicul" Width="150" ToolTip="Introdu marca sau modelul..."/>
+                                    <Button Content="Caută" Click="BtnCautaVehicul_Click" Background="#1976D2" Foreground="White"/>
+                                    <Button Content="X" Click="BtnRefresh_Click" Background="#2E7D32" Foreground="White"/>
+                                </StackPanel>
+                            </GroupBox>
 
-                        <Label Content="Culoare:" FontWeight="Bold" Margin="0,10,0,0"/>
-                        <WrapPanel Margin="5">
-                            <RadioButton x:Name="rbAlb" Content="Alb" IsChecked="True" Margin="0,0,10,5"/>
-                            <RadioButton x:Name="rbNegru" Content="Negru" Margin="0,0,10,5"/>
-                            <RadioButton x:Name="rbRosu" Content="Roșu" Margin="0,0,10,5"/>
-                            <RadioButton x:Name="rbAlbastru" Content="Albastru" Margin="0,0,10,5"/>
-                            <RadioButton x:Name="rbGri" Content="Gri" Margin="0,0,10,5"/>
-                        </WrapPanel>
-                        <Label Content="Opțiuni Extra:" FontWeight="Bold" Margin="0,10,0,0"/>
-                        <CheckBox x:Name="chkAC" Content="Aer condiționat" Margin="5,2"/>
-                        <CheckBox x:Name="chkNav" Content="Navigație GPS" Margin="5,2"/>
+                            <Label x:Name="lblMarca" Content="Marca:"/>
+                            <TextBox x:Name="txtMarca"/>
+                            <Label x:Name="lblModel" Content="Model:"/>
+                            <TextBox x:Name="txtModel"/>
+                            <Label x:Name="lblAn" Content="An:"/>
+                            <TextBox x:Name="txtAn"/>
+                            <Label x:Name="lblKm" Content="Kilometri:"/>
+                            <TextBox x:Name="txtKm"/>
 
-                        <Button Content="Adaugă Vehicul" Click="BtnAdaugaVehicul_Click" Margin="0,15,0,0"/>
-                    </StackPanel>
+                            <Label x:Name="lblEroareVehicul" Foreground="Red" FontWeight="Bold" Visibility="Collapsed"/>
+                            <Label Content="Culoare:" FontWeight="Bold" Margin="0,10,0,0"/>
+                            <WrapPanel Margin="5">
+                                <RadioButton x:Name="rbAlb" Content="Alb" IsChecked="True" Margin="0,0,10,5"/>
+                                <RadioButton x:Name="rbNegru" Content="Negru" Margin="0,0,10,5"/>
+                                <RadioButton x:Name="rbRosu" Content="Roșu" Margin="0,0,10,5"/>
+                                <RadioButton x:Name="rbAlbastru" Content="Albastru" Margin="0,0,10,5"/>
+                                <RadioButton x:Name="rbGri" Content="Gri" Margin="0,0,10,5"/>
+                            </WrapPanel>
 
-                    <DataGrid x:Name="dgVehicule" Grid.Column="1">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Marca" Binding="{Binding Marca}" Width="*"/>
-                            <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="*"/>
-                            <DataGridTextColumn Header="An" Binding="{Binding An}" Width="0.5*"/>
-                            <DataGridTextColumn Header="Kilometri" Binding="{Binding Kilometri}" Width="0.8*"/>
-                            <DataGridTextColumn Header="Culoare" Binding="{Binding CuloareVehicul}" Width="*"/>
-                            <DataGridTextColumn Header="Opțiuni" Binding="{Binding Optiuni}" Width="1.5*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
+                            <Label Content="Opțiuni Extra:" FontWeight="Bold" Margin="0,10,0,0"/>
+                            <CheckBox x:Name="chkAC" Content="Aer Condiționat" Margin="5,2"/>
+                            <CheckBox x:Name="chkNav" Content="Navigație GPS" Margin="5,2"/>
+
+                            <Button Content="Adaugă Vehicul" Click="BtnAdaugaVehicul_Click" Margin="0,15,0,0"/>
+                        </StackPanel>
+
+                        <DataGrid x:Name="dgVehicule" Grid.Column="1">
+                            <DataGrid.Effect>
+                                <DropShadowEffect BlurRadius="8" ShadowDepth="8" Direction="315" Opacity="0.25"/>
+                            </DataGrid.Effect>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Marca" Binding="{Binding Marca}" Width="Auto"/>
+                                <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="Auto"/>
+                                <DataGridTextColumn Header="An" Binding="{Binding An}" Width="60"/>
+                                <DataGridTextColumn Header="Kilometri" Binding="{Binding Kilometri}" Width="100"/>
+                                <DataGridTextColumn Header="Culoare" Binding="{Binding CuloareVehicul}" Width="Auto"/>
+                                <DataGridTextColumn Header="Opțiuni" Binding="{Binding Optiuni}" Width="150"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
 
+            <!-- ================= TAB 3: CLIENȚI ================= -->
             <TabItem Header="Clienți">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
+                <!-- SCROLL ADAUGAT AICI -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="2.5*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Margin="10">
-                        <Label Content="Nume:"/>
-                        <TextBox x:Name="txtNumeClient"/>
-                        <Label Content="Prenume:"/>
-                        <TextBox x:Name="txtPrenumeClient"/>
-                        <Label Content="Vârsta:"/>
-                        <TextBox x:Name="txtVarstaClient"/>
-                        <Label Content="Telefon:"/>
-                        <TextBox x:Name="txtTelefonClient"/>
-                        <Label Content="Firma:"/>
-                        <TextBox x:Name="txtFirmaClient"/>
-                        <Button Content="Adaugă Client" Click="BtnAdaugaClient_Click"/>
-                        
-                    </StackPanel>
+                        <StackPanel Grid.Column="0" Margin="10">
+                            <GroupBox Header="Căutare (Nume sau Prenume)">
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBox x:Name="txtCautaClient" Width="150" ToolTip="Introdu nume sau prenume..."/>
+                                    <Button Content="Caută" Click="BtnCautaClient_Click" Background="#1976D2" Foreground="White"/>
+                                    <Button Content="X" Click="BtnRefresh_Click" Background="#2E7D32" Foreground="White"/>
+                                </StackPanel>
+                            </GroupBox>
 
-                    <DataGrid x:Name="dgClienti" Grid.Column="1">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Nume" Binding="{Binding Nume}" Width="*"/>
-                            <DataGridTextColumn Header="Prenume" Binding="{Binding Prenume}" Width="*"/>
-                            <DataGridTextColumn Header="Vârsta" Binding="{Binding Varsta}" Width="0.5*"/>
-                            <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}" Width="*"/>
-                            <DataGridTextColumn Header="Firma" Binding="{Binding Firma}" Width="1.5*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
+                            <Label x:Name="lblNumeClient" Content="Nume:"/>
+                            <TextBox x:Name="txtNumeClient"/>
+                            <Label x:Name="lblPrenumeClient" Content="Prenume:"/>
+                            <TextBox x:Name="txtPrenumeClient"/>
+                            <Label x:Name="lblVarstaClient" Content="Vârsta:"/>
+                            <TextBox x:Name="txtVarstaClient"/>
+                            <Label x:Name="lblTelefonClient" Content="Telefon:"/>
+                            <TextBox x:Name="txtTelefonClient"/>
+                            <Label Content="Firma:"/>
+                            <TextBox x:Name="txtFirmaClient"/>
+
+                            <Label x:Name="lblEroareClient" Foreground="Red" FontWeight="Bold" Visibility="Collapsed"/>
+                            <Button Content="Adaugă Client" Click="BtnAdaugaClient_Click" Margin="0,10,0,10"/>
+
+                        </StackPanel>
+
+                        <DataGrid x:Name="dgClienti" Grid.Column="1">
+                            <DataGrid.Effect>
+                                <DropShadowEffect BlurRadius="8" ShadowDepth="8" Direction="315" Opacity="0.25"/>
+                            </DataGrid.Effect>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Nume" Binding="{Binding Nume}" Width="Auto"/>
+                                <DataGridTextColumn Header="Prenume" Binding="{Binding Prenume}" Width="Auto"/>
+                                <DataGridTextColumn Header="Vârsta" Binding="{Binding Varsta}" Width="60"/>
+                                <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}" Width="Auto"/>
+                                <DataGridTextColumn Header="Firma" Binding="{Binding Firma}" Width="180"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
 
+            <!-- ================= TAB 4: JOBURI / RUTE ================= -->
             <TabItem Header="Joburi / Rute">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2.5*"/>
-                    </Grid.ColumnDefinitions>
+                <!-- SCROLL ADAUGAT AICI -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Grid>
+                        <!-- AICI AM MODIFICAT PROPORȚIILE (1.5 și 2 în loc de 1 și 2.5) -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"/>
+                            <!-- Formularul este mai lat acum -->
+                            <ColumnDefinition Width="2*"/>
+                            <!-- DataGrid-ul este mai îngust -->
+                        </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Margin="10">
-                        <Label Content="Selectează șofer:"/>
-                        <ComboBox x:Name="cmbSoferi" DisplayMemberPath="Nume"/>
-                        <Label Content="Selectează vehicul:"/>
-                        <ComboBox x:Name="cmbVehicule" DisplayMemberPath="Marca"/>
-                        <Label Content="Selectează client:"/>
-                        <ComboBox x:Name="cmbClienti" DisplayMemberPath="Nume"/>
+                        <StackPanel Grid.Column="0" Margin="10">
+                            <GroupBox Header="Căutare Traseu (Plecare sau Destinație)">
+                                <StackPanel Orientation="Horizontal" Margin="5">
+                                    <TextBox x:Name="txtCautaJob" Width="150" ToolTip="Ex: Suceava sau Bucuresti..."/>
+                                    <Button Content="Caută" Click="BtnCautaJob_Click" Background="#1976D2" Foreground="White"/>
+                                    <Button Content="X" Click="BtnRefresh_Click" Background="#2E7D32" Foreground="White"/>
+                                </StackPanel>
+                            </GroupBox>
 
-                        <Label Content="Plecare:"/>
-                        <TextBox x:Name="txtPlecare"/>
-                        <Label Content="Destinație:"/>
-                        <TextBox x:Name="txtDestinatie"/>
-                        <Label Content="Distanța (km):"/>
-                        <TextBox x:Name="txtDistantaJob"/>
-                        <Label Content="Data și ora start:"/>
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <DatePicker x:Name="dpDataStart" Width="120" ToolTip="Alege data de start"/>
-                            <Label Content="Ora:" Margin="10,0,5,0"/>
-                            <TextBox x:Name="txtOraStart" Width="50" Text="08:00" ToolTip="HH:mm"/>
+                            <Label x:Name="lblSoferJob" Content="Selectează Șofer:"/>
+                            <ComboBox x:Name="cmbSoferi" DisplayMemberPath="Nume"/>
+                            <Label x:Name="lblVehiculJob" Content="Selectează Vehicul:"/>
+                            <ComboBox x:Name="cmbVehicule" DisplayMemberPath="Marca"/>
+                            <Label x:Name="lblClientJob" Content="Selectează Client:"/>
+                            <ComboBox x:Name="cmbClienti" DisplayMemberPath="Nume"/>
+
+                            <Label x:Name="lblPlecare" Content="Plecare:"/>
+                            <TextBox x:Name="txtPlecare"/>
+                            <Label x:Name="lblDestinatie" Content="Destinație:"/>
+                            <TextBox x:Name="txtDestinatie"/>
+                            <Label x:Name="lblDistanta" Content="Distanța (km):"/>
+                            <TextBox x:Name="txtDistantaJob"/>
+
+                            <Label x:Name="lblDataStartJob" Content="Data și Ora Start:"/>
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <DatePicker x:Name="dpDataStart" Width="120" ToolTip="Alege data de start"/>
+                                <Label Content="Ora:" Margin="10,0,5,0"/>
+                                <TextBox x:Name="txtOraStart" Width="50" Text="08:00"/>
+                            </StackPanel>
+
+                            <Label x:Name="lblDataFinalJob" Content="Data și Ora Final:"/>
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <DatePicker x:Name="dpDataFinal" Width="120" ToolTip="Alege data de finalizare"/>
+                                <Label Content="Ora:" Margin="10,0,5,0"/>
+                                <TextBox x:Name="txtOraFinal" Width="50" Text="16:00"/>
+                            </StackPanel>
+
+                            <Label x:Name="lblEroareJob" Foreground="Red" FontWeight="Bold" Visibility="Collapsed"/>
+
+                            <Button Content="Alocă Job" Click="BtnAdaugaJob_Click" Background="#2E7D32" Foreground="White" Margin="0,15,0,0"/>
                         </StackPanel>
-                        <Label Content="Data și ora final:"/>
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <DatePicker x:Name="dpDataFinal" Width="120" ToolTip="Alege data de finalizare"/>
-                            <Label Content="Ora:" Margin="10,0,5,0"/>
-                            <TextBox x:Name="txtOraFinal" Width="50" Text="16:00" ToolTip="HH:mm"/>
-                        </StackPanel>
-                        <Button Content="Alocă Job" Click="BtnAdaugaJob_Click" Background="#4CAF50"/>
-                    </StackPanel>
 
-                    <DataGrid x:Name="dgJoburi" Grid.Column="1">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Șofer" Binding="{Binding SoferAlocat.Nume}" Width="*"/>
-                            <DataGridTextColumn Header="Vehicul" Binding="{Binding VehiculAlocat.Marca}" Width="*"/>
-                            <DataGridTextColumn Header="Client" Binding="{Binding ClientCursa.Nume}" Width="*"/>
-                            <DataGridTextColumn Header="Plecare" Binding="{Binding PunctPlecare}" Width="*"/>
-                            <DataGridTextColumn Header="Destinație" Binding="{Binding PunctDestinatie}" Width="*"/>
-                            <DataGridTextColumn Header="Distanță" Binding="{Binding DistantaTraseu}" Width="0.8*"/>
-                            <DataGridTextColumn Header="Data Start" Binding="{Binding DataIncepere, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Width="1.2*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
+                        <DataGrid x:Name="dgJoburi" Grid.Column="1">
+                            <DataGrid.Effect>
+                                <DropShadowEffect BlurRadius="8" ShadowDepth="8" Direction="315" Opacity="0.25"/>
+                            </DataGrid.Effect>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Șofer" Binding="{Binding SoferAlocat.Nume}" Width="Auto"/>
+                                <DataGridTextColumn Header="Vehicul" Binding="{Binding VehiculAlocat.Marca}" Width="Auto"/>
+                                <DataGridTextColumn Header="Client" Binding="{Binding ClientCursa.Nume}" Width="Auto"/>
+                                <DataGridTextColumn Header="Plecare" Binding="{Binding PunctPlecare}" Width="Auto"/>
+                                <DataGridTextColumn Header="Destinație" Binding="{Binding PunctDestinatie}" Width="Auto"/>
+                                <DataGridTextColumn Header="Distanță" Binding="{Binding DistantaTraseu}" Width="100"/>
+                                <DataGridTextColumn Header="Data Start" Binding="{Binding DataIncepere, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" Width="150"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
 
         </TabControl>

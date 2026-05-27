@@ -21,6 +21,21 @@ namespace Date
             }
         }
 
+        public void ModificaClient(string numeCautat, Client clientNou)
+        {
+            var clienti = GetClienti();
+            for (int i = 0; i < clienti.Count; i++)
+                if (clienti[i].Nume.ToLower() == numeCautat.ToLower()) { clienti[i] = clientNou; break; }
+            File.WriteAllLines(numeFisier, clienti.Select(c => c.ConversieLaSir_PentruFisier()));
+        }
+
+        public void StergeClient(string numeCautat)
+        {
+            var clienti = GetClienti();
+            clienti.RemoveAll(c => c.Nume.ToLower() == numeCautat.ToLower());
+            File.WriteAllLines(numeFisier, clienti.Select(c => c.ConversieLaSir_PentruFisier()));
+        }
+
         public List<Client> GetClienti()
         {
             List<Client> clienti = new List<Client>();

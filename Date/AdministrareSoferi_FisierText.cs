@@ -26,6 +26,13 @@ namespace Date
             }
         }
 
+        public void StergeSofer(string numeCautat)
+        {
+            var soferi = GetSoferi();
+            soferi.RemoveAll(s => s.Nume.ToLower() == numeCautat.ToLower());
+            File.WriteAllLines(numeFisier, soferi.Select(s => s.ConversieLaSir_PentruFisier()));
+        }
+
         public List<Sofer> GetSoferi()
         {
             List<Sofer> soferi = new List<Sofer>();
