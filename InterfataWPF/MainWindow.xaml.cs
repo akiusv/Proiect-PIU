@@ -77,20 +77,18 @@ namespace InterfataWPF
         {
             if (ValideazaSofer())
             {
-                // Observă cum luăm Numele și Vârsta direct din soferVM (ViewModel), nu din TextBox!
-                Sofer s = new Sofer(soferVM.Nume, txtPrenumeSofer.Text, soferVM.Varsta, txtTelefonSofer.Text, 0);
+                // Preluăm kilometrii din txtKmSofer. Dacă e gol sau text, punem 0 default.
+                int.TryParse(txtKmSofer.Text, out int km);
+
+                Sofer s = new Sofer(soferVM.Nume, txtPrenumeSofer.Text, soferVM.Varsta, txtTelefonSofer.Text, km);
                 adminSoferi.AdaugaSofer(s);
 
-                // Resetam ViewModel-ul pentru urmatorul sofer
-                soferVM.Nume = "";
-                soferVM.Varsta = 18;
-                txtPrenumeSofer.Text = "";
-                txtTelefonSofer.Text = "";
+                soferVM.Nume = ""; soferVM.Varsta = 18;
+                txtPrenumeSofer.Text = ""; txtTelefonSofer.Text = ""; txtKmSofer.Text = "0"; // Resetam si km
 
                 IncarcaToateDatele();
             }
-        }
-        // Tema 9.2 modificare
+        }        // Tema 9.2 modificare
         private void BtnModificaSofer_Click(object sender, RoutedEventArgs e)
         {
             if (dgSoferi.SelectedItem is Sofer soferSelectat)

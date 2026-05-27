@@ -11,11 +11,8 @@
             <Setter Property="Margin" Value="10"/>
             <Setter Property="AlternatingRowBackground" Value="#E9ECEF"/>
             <Setter Property="RowBackground" Value="White"/>
-
             <Setter Property="Background" Value="White"/>
-
             <Setter Property="HeadersVisibility" Value="Column"/>
-
             <Setter Property="GridLinesVisibility" Value="Horizontal"/>
             <Setter Property="HorizontalGridLinesBrush" Value="#DEE2E6"/>
             <Setter Property="BorderBrush" Value="#CED4DA"/>
@@ -25,20 +22,28 @@
     </Window.Resources>
 
     <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Margin="10">
-                <Label Content="Nume:"/>
-                <TextBox x:Name="txtNume"/>
-                <Label Content="Prenume:"/>
-                <TextBox x:Name="txtPrenume"/>
-                <Label Content="Vârsta:"/>
-                <TextBox x:Name="txtVarsta"/>
-                <Label Content="Telefon:"/>
-                <TextBox x:Name="txtTelefon"/>
+        <StackPanel Grid.Column="0" Margin="10">
+            <Label x:Name="lblNume" Content="Nume:"/>
+            <TextBox x:Name="txtNume"/>
+
+            <Label x:Name="lblPrenume" Content="Prenume:"/>
+            <TextBox x:Name="txtPrenume"/>
+
+            <Label x:Name="lblVarsta" Content="Vârsta:"/>
+            <TextBox x:Name="txtVarsta"/>
+
+            <Label x:Name="lblTelefon" Content="Telefon (10 cifre):"/>
+            <TextBox x:Name="txtTelefon"/>
+
+            <Label x:Name="lblKmSofer" Content="Kilometri:"/>
+            <TextBox x:Name="txtKmSofer" Text="0"/>
+
+            <Label x:Name="lblEroare" Foreground="Red" FontWeight="Bold" Visibility="Collapsed" Margin="0,5,0,0"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
                 <Button Content="Adaugă" Click="BtnAdauga_Click" Background="#2E7D32" Foreground="White"/>
@@ -47,18 +52,18 @@
             </StackPanel>
         </StackPanel>
 
-            <DataGrid x:Name="dgSoferi" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dgSoferi_SelectionChanged" Margin="10">
+        <DataGrid x:Name="dgSoferi" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="dgSoferi_SelectionChanged" Margin="10">
             <DataGrid.Effect>
                 <DropShadowEffect BlurRadius="8" ShadowDepth="8" Direction="315" Opacity="0.25"/>
             </DataGrid.Effect>
 
             <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nume" Binding="{Binding Nume}" Width="*"/>
-                    <DataGridTextColumn Header="Prenume" Binding="{Binding Prenume}" Width="*"/>
-                    <DataGridTextColumn Header="Vârsta" Binding="{Binding Varsta}" Width="0.5*"/>
-                    <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}" Width="*"/>
-                    <DataGridTextColumn Header="Km" Binding="{Binding KmParcursi}" Width="0.8*"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
-    </Window>
+                <DataGridTextColumn Header="Nume" Binding="{Binding Nume}" Width="*"/>
+                <DataGridTextColumn Header="Prenume" Binding="{Binding Prenume}" Width="*"/>
+                <DataGridTextColumn Header="Vârsta" Binding="{Binding Varsta}" Width="0.5*"/>
+                <DataGridTextColumn Header="Telefon" Binding="{Binding Telefon}" Width="*"/>
+                <DataGridTextColumn Header="Km" Binding="{Binding KmParcursi}" Width="0.8*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

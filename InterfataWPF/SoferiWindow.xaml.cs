@@ -1,7 +1,9 @@
 ﻿using Clase;
 using Date;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace InterfataWPF
 {
@@ -17,24 +19,51 @@ namespace InterfataWPF
 
         private void IncarcaDate() => dgSoferi.ItemsSource = adminSoferi.GetSoferi();
 
+        private bool Valideaza()
+        {
+            bool valid = true;
+            lblNume.Foreground = Brushes.Black;
+            lblPrenume.Foreground = Brushes.Black;
+            lblVarsta.Foreground = Brushes.Black;
+            lblTelefon.Foreground = Brushes.Black;
+            lblKmSofer.Foreground = Brushes.Black;
+            lblEroare.Visibility = Visibility.Collapsed;
+
+            if (string.IsNullOrWhiteSpace(txtNume.Text)) { lblNume.Foreground = Brushes.Red; valid = false; }
+            if (string.IsNullOrWhiteSpace(txtPrenume.Text)) { lblPrenume.Foreground = Brushes.Red; valid = false; }
+            if (!int.TryParse(txtVarsta.Text, out int varsta) || varsta < 18 || varsta > 70) { lblVarsta.Foreground = Brushes.Red; valid = false; }
+            if (string.IsNullOrWhiteSpace(txtTelefon.Text) || txtTelefon.Text.Length != 10 || !txtTelefon.Text.All(char.IsDigit)) { lblTelefon.Foreground = Brushes.Red; valid = false; }
+            if (!int.TryParse(txtKmSofer.Text, out int km) || km < 0) { lblKmSofer.Foreground = Brushes.Red; valid = false; }
+
+            if (!valid)
+            {
+                lblEroare.Content = "Te rog să corectezi câmpurile marcate cu roșu!";
+                lblEroare.Visibility = Visibility.Visible;
+            }
+
+            return valid;
+        }
+
         private void BtnAdauga_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (Valideaza())
             {
-                adminSoferi.AdaugaSofer(new Sofer(txtNume.Text, txtPrenume.Text, int.Parse(txtVarsta.Text), txtTelefon.Text, 0));
+                adminSoferi.AdaugaSofer(new Sofer(txtNume.Text, txtPrenume.Text, int.Parse(txtVarsta.Text), txtTelefon.Text, int.Parse(txtKmSofer.Text)));
                 IncarcaDate();
             }
-            catch { MessageBox.Show("Date invalide!"); }
         }
 
         private void BtnModifica_Click(object sender, RoutedEventArgs e)
         {
-            if (dgSoferi.SelectedItem is Sofer s)
+            if (dgSoferi.SelectedItem is Sofer s && Valideaza())
             {
-                adminSoferi.ModificaSofer(s.Nume, new Sofer(txtNume.Text, txtPrenume.Text, int.Parse(txtVarsta.Text), txtTelefon.Text, s.KmParcursi));
+                adminSoferi.ModificaSofer(s.Nume, new Sofer(txtNume.Text, txtPrenume.Text, int.Parse(txtVarsta.Text), txtTelefon.Text, int.Parse(txtKmSofer.Text)));
                 IncarcaDate();
             }
-            else MessageBox.Show("Selectează un șofer!");
+            else if (dgSoferi.SelectedItem == null)
+            {
+                MessageBox.Show("Selectează un șofer!");
+            }
         }
 
         private void BtnSterge_Click(object sender, RoutedEventArgs e)
@@ -51,7 +80,11 @@ namespace InterfataWPF
         {
             if (dgSoferi.SelectedItem is Sofer s)
             {
-                txtNume.Text = s.Nume; txtPrenume.Text = s.Prenume; txtVarsta.Text = s.Varsta.ToString(); txtTelefon.Text = s.Telefon;
+                txtNume.Text = s.Nume;
+                txtPrenume.Text = s.Prenume;
+                txtVarsta.Text = s.Varsta.ToString();
+                txtTelefon.Text = s.Telefon;
+                txtKmSofer.Text = s.KmParcursi.ToString();
             }
         }
     }

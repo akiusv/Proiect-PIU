@@ -95,6 +95,10 @@
 
                             <Label x:Name="lblTelefon" Content="Telefon:"/>
                             <TextBox x:Name="txtTelefonSofer"/>
+
+                            <Label Content="Kilometri inițiali:"/>
+                            <TextBox x:Name="txtKmSofer" Text="0"/>
+
                             <Label x:Name="lblEroareSofer" Foreground="Red" FontWeight="Bold" Visibility="Collapsed"/>
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
